@@ -1,0 +1,119 @@
+<html>
+    <head>
+        <title>Pizzas</title>
+        <!-- Add link to css here --> 
+        <!-- Add script language -->
+    </head>
+    <body>
+        <h1>Pizzas</h1>
+        <a href="index.html">Pizzas</a>
+        <a href="Employees.html">Employees</a>
+        <a href="Customers.html">Customers</a>
+        <a href="Orders.html">Orders</a>
+        <a href="OrderDetails.html">OrderDetails</a>
+
+        <div id="browse">
+            <!-- Can include buttons here above the table -->
+            <p> <a href="#">Add</a> </p>
+        
+            <table border="1" cellpadding="5">
+                <tr>
+                    <th>pizza_id</th>
+                    <th>pizza_type</th>
+                    <th>pizza_price</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                <tr>
+                    <td align="center" >1</td>
+                    <td align="center">Meat Lovers</td>
+                    <td align="center" >26.12</td>
+                    <td><a href="#">Edit</a></td>
+                    <td><a href="#">Delete</a></td>
+                </tr>
+                <tr>
+                    <td align="center" >2</td>
+                    <td align="center">Cheese</td>
+                    <td align="center" >20.00</td>
+                    <td><a href="#">Edit</a></td>
+                    <td><a href="#">Delete</a></td>
+                </tr>
+                <tr>
+                    <td align="center" >3</td>
+                    <td align="center">Pepperoni</td>
+                    <td align="center" >23.22</td>
+                    <td><a href="#">Edit</a></td>
+                    <td><a href="#">Delete</a></td>
+                </tr>
+                <tr>
+                    <td align="center" >4</td>
+                    <td align="center">Vegetarian</td>
+                    <td align="center" >25.22</td>
+                    <td><a href="#">Edit</a></td>
+                    <td><a href="#">Delete</a></td>
+                </tr>
+            </table>
+            <p>&nbsp;</p> <!-- just some space for looks -->
+        </div> <!-- browse ends -->
+        <div id="insert">
+            <form method="" id="">
+            <legend><strong>Add Pizza</strong></legend>
+            <fieldset class="field">
+                <label> pizza_id </label> <input type="text" name="pid">
+                <label> pizza_type </label> <input type="text" name="ptype">
+                <label> pizza_price </label> <input type="text" name="pprice">
+            </fieldset>
+            <input class="btn" type="submit" id="addPizza" value="Add Pizza">
+            <input class="btn" type="button" value="Cancel"> <!-- On click go back to browse -->
+            </form>
+        </div> <!-- insert ends -->
+        <div id="update">
+            <form method="" id="">
+            <legend><strong>Update Pizza Price</strong></legend>
+            <fieldset class="field">
+                <label> pizza_id </label> <select name="pid">
+                    <option value="0">&nbsp;</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    </select>
+                <label> pizza_type </label> <select type="text" name="ptype">
+                    <option value="0">&nbsp;</option>
+                    <option value="1">Meat Lovers</option>
+                    <option value="2">Cheese</option>
+                    <option value="3">Pepperoni</option>
+                    <option value="4">Vegetarian</option>
+                    </select>
+                <label> pizza_price </label> <input type="text" name="pprice">
+            </fieldset>
+            <input class="btn" type="submit" id="updatePizza" value="Save Pizza">
+            <input class="btn" type="button" value="Cancel"> <!-- On click go back to browse -->
+            </form>
+        </div> <!-- update ends -->
+        <div id="delete">
+            <form method="" id="">
+            <legend><strong>Delete Pizza</strong></legend>
+            <fieldset class="fields">
+                <p>Input pizza_id and pizza_type to delete: </p>
+                <label> pizza_id </label> <select type="text" name="pid">
+                    <option value="0">&nbsp;</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    </select>
+                <label> pizza_type </label> <select type="text" name="ptype">
+                    <option value="0">&nbsp;</option>
+                    <option value="1">Meat Lovers</option>
+                    <option value="2">Cheese</option>
+                    <option value="3">Pepperoni</option>
+                    <option value="4">Vegetarian</option>
+                    </select>
+            </fieldset>
+            <input class="btn" type="submit" id="deletePizza" value="Delete Pizza">
+            <input class="btn" type="button" value="Cancel"> <!-- On click go back to browse -->
+            </form>
+        </div> <!-- delete ends -->
+    </body>
+</html>

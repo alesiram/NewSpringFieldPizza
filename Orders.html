@@ -1,0 +1,100 @@
+<html>
+    <head>
+        <title>Orders</title>
+        <!-- Add link to css here --> 
+        <!-- Add script language -->
+    </head>
+    <body>
+        <h1>Orders</h1>
+        <a href="index.html">Pizzas</a>
+        <a href="Employees.html">Employees</a>
+        <a href="Customers.html">Customers</a>
+        <a href="Orders.html">Orders</a>
+        <a href="OrderDetails.html">OrderDetails</a>
+
+        <div id="browse">
+            <!-- Can include buttons here above the table -->
+            <p> <a href="#">Add</a> </p>
+        
+            <table border="1" cellpadding="5">
+                <tr>
+                    <th>order_id</th>
+                    <th>order_date</th>
+                    <th>order_total</th>
+                    <th>customer_id</th>
+                    <th>employee_id</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                <tr>
+                    <td align="center" >1</td>
+                    <td align="center">2022-04-27</td>
+                    <td align="center" >52.24</td>
+                    <td align="center">3</td>
+                    <td align="center">1</td>
+                    <td><a href="#">Edit</a></td>
+                    <td><a href="#">Delete</a></td>
+                </tr>
+                <tr>
+                    <td align="center" >2</td>
+                    <td align="center">2022-04-28</td>
+                    <td align="center" >25.22</td>
+                    <td align="center">2</td>
+                    <td align="center">3</td>
+                    <td><a href="#">Edit</a></td>
+                    <td><a href="#">Delete</a></td>
+                </tr>
+                <tr>
+                    <td align="center" >3</td>
+                    <td align="center">2022-04-29</td>
+                    <td align="center" >23.22</td>
+                    <td align="center">1</td>
+                    <td align="center">2</td>
+                    <td><a href="#">Edit</a></td>
+                    <td><a href="#">Delete</a></td>
+                </tr>
+            </table>
+            <p>&nbsp;</p> <!-- just some space for looks -->
+        </div> <!-- browse ends -->
+        <div id="insert">
+            <form method="" id="">
+            <legend><strong>Add Order</strong></legend>
+            <fieldset class="field">
+                <label> order_id </label> <input type="text" name="oid">
+                <label> order_date </label> <input type="date" name="odate">
+                <label> order_total </label> <input type="number" name="ototal">
+                <label> customer_id </label> <input type="number" name="cid">
+                <label> employee_id </label> <input type="number" name="eid">
+            </fieldset>
+            <input class="btn" type="submit" id="addOrder" value="Add Order">
+            <input class="btn" type="button" value="Cancel"> <!-- On click go back to browse -->
+            </form>
+        </div> <!-- insert ends -->
+        <div id="update">
+            <form method="" id="">
+            <legend><strong>Update Order</strong></legend>
+            <fieldset class="field">
+                <label> order_id </label> <input type="text" name="oid">
+                <label> order_date </label> <input type="date" name="odate">
+                <label> order_total </label> <input type="number" name="ototal"> <!-- how to prefill today's date? -->
+                <label> customer_id </label> <input type="number" name="cid">
+                <label> employee_id </label> <input type="number" name="eid">
+            </fieldset>
+            <input class="btn" type="submit" id="updateOrder" value="Save Order">
+            <input class="btn" type="button" value="Cancel"> <!-- On click go back to browse -->
+            </form>
+        </div> <!-- update ends -->
+        <div id="delete">
+            <form method="" id="">
+            <legend><strong>Delete Order</strong></legend>
+            <fieldset class="fields">
+                <p>Input order_id and customer_id to delete: </p>
+                <label> order_id </label> <input type="text" name="oid">
+                <label> customer_id </label> <input type="number" name="cid">
+            </fieldset>
+            <input class="btn" type="submit" id="deleteOrder" value="Delete Order">
+            <input class="btn" type="button" value="Cancel"> <!-- On click go back to browse -->
+            </form>
+        </div> <!-- delete ends -->
+    </body>
+</html>

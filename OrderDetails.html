@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <title>OrderDetails</title>
+        <!-- Add link to css here --> 
+        <!-- Add script language -->
+    </head>
+    <body>
+        <h1>Order Details</h1>
+        <a href="index.html">Pizzas</a>
+        <a href="Employees.html">Employees</a>
+        <a href="Customers.html">Customers</a>
+        <a href="Orders.html">Orders</a>
+        <a href="OrderDetails.html">OrderDetails</a>
+
+        <div id="browse">
+            <!-- Can include buttons here above the table -->
+            <table border="1" cellpadding="5">
+                <tr>
+                    <th>line_number</th>
+                    <th>order_id</th>
+                    <th>pizza_id</th>
+                    <th>quantity</th>
+                </tr>
+                <tr>
+                    <td align="center" >1</td>
+                    <td align="center">1</td>
+                    <td align="center" >1</td>
+                    <td align="center" >2</td>
+                </tr>
+                <tr>
+                    <td align="center" >2</td>
+                    <td align="center">2</td>
+                    <td align="center" >4</td>
+                    <td align="center" >1</td>
+                </tr>
+                <tr>
+                    <td align="center" >3</td>
+                    <td align="center">3</td>
+                    <td align="center" >3</td>
+                    <td align="center" >1</td>
+                </tr>
+            </table>
+            <p>&nbsp;</p> <!-- just some space for looks -->
+        </div> <!-- browse ends -->
+        <div id="insert">
+            <form method="" id="">
+            <legend><strong>Add Order Item</strong></legend>
+            <fieldset class="field">
+                <label> line_number </label> <input type="text" name="lnumber">
+                <label> order_id </label> <input type="text" name="oid">
+                <label> pizza_id </label> <input type="text" name="pid">
+                <label> quantity </label> <input type="text" name="qty">
+            </fieldset>
+            <input class="btn" type="submit" id="addItem" value="Add Item">
+            <input class="btn" type="button" value="Cancel"> <!-- On click go back to browse -->
+            </form>
+        </div> <!-- insert ends -->
+        <div id="delete">
+            <form method="" id="">
+                <legend><strong>Delete Order Item</strong></legend>
+                <fieldset class="field">
+                    <label> line_number </label><select type="text" name="line">
+                        <option value="0">&nbsp;</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
+                </fieldset>
+                <input class="btn" type="submit" id="deleteItem" value="Delete Line Item">
+                <input class="btn" type="button" value="Cancel"> <!-- On click go back to browse -->
+            </form>
+        </div>
+    </body>
+</html>
