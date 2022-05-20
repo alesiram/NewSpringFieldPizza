@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<html>
+    <head>
+        <title>Customers</title>
+        <!-- Add link to css here --> 
+        <!-- Add script language -->
+    </head>
+    <body>
+        <h4>Customer Database</h4>
+        <table border="1" cellpadding="6">
+            <!-- Access data tuple passed from app.py --> 
+            {% if data %}
+                <thead>
+                    <tr>
+                        <!-- Iterate through each key in the first entry to get the column name -->
+                        {% for key in data[0].keys() %}
+                        
+                        <!-- Create a <th> tag with the key inside of it, this will be our header row -->
+                        <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+                    
+                        <!-- End of this for loop -->
+                        {% endfor %} 
+                    </tr>
+        
+                <tbody>
+                    <!-- Now, iterate through every item in data -->{% for item in data %}
+                        <tr>
+                            <!-- Then iterate through every key in the current item dictionary -->
+                            {% for key in item.keys() %}
+                              
+                            <!-- Create a <td> element with the value of that key in it -->
+                            <td> {{item[key]}} </td> 
+                            {% endfor %}
+                          
+                            <!-- edit button inside Cusotmer page -->
+                               
+                            <td><a href="Customer_edit/{{item.customer_id}}" class="btn btn-default">Edit</a></td>
+                   
+
+                            <!-- delete buttons inside Customer page-->
+                            <td><a href="Customer_delete/{{item.customer_id}}" class="btn btn-default">Delete</a></td>
+                        </tr> 
+                        
+                        {% endfor %} 
+                {% endif %} 
+            </table>
+        
+            <div id="insert">
+                <form id="insertCustomer" action="/Customers" method="POST">
+                    
+                    <h4>New Cusotmer</h4>
+                    
+                    <label for ="cfirst_name">First Name</label>
+                    <input type="text" id="cfirst_name" name="cfirst_name" required>
+                    
+                    <label for ="clast_name">Last Name</label>
+                    <input type="text" id="clast_name" name="clast_name" required>
+                    
+                    <label for ="phone">Phone Number</label>
+                    <input type="text" id="phone" name="phone" required>
+                    
+                    <input type="submit" value="Add" name="Add_Customer">
+                </form>
+            </div>
+        </body>
+        </html>   
+            </form>
+        </div> <!-- insert ends -->
+{% endblock %}
