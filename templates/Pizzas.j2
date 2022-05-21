@@ -4,12 +4,12 @@
 
 <html>
     <head>
-        <title>Customers</title>
+        <title>Pizzas</title>
         <!-- Add link to css here --> 
         <!-- Add script language -->
     </head>
     <body>
-        <h4>Customer Data</h4>
+        <h4>Pizzas Data</h4>
         <table border="1" cellpadding="6">
             <!-- Access data tuple passed from app.py --> 
             {% if data %}
@@ -35,13 +35,13 @@
                             <td> {{item[key]}} </td> 
                             {% endfor %}
                           
-                            <!-- edit button inside Cusotmer page -->
+                            <!-- edit button inside Pizza page -->
                                
-                            <td><a href="Customer_edit/{{item.customer_id}}" class="btn btn-default">Edit</a></td>
+                            <td><a href="Pizzas_edit/{{item.pizza_id}}" class="btn btn-default">Edit</a></td>
                    
 
-                            <!-- delete buttons inside Customer page-->
-                            <td><a href="Customer_delete/{{item.customer_id}}" class="btn btn-default">Delete</a></td>
+                            <!-- delete buttons inside Pizza page-->
+                            <td><a href="Pizzas_delete/{{item.pizza_id}}" class="btn btn-default">Delete</a></td>
                         </tr> 
                         
                         {% endfor %} 
@@ -49,20 +49,17 @@
             </table>
         
             <div id="insert">
-                <form id="insertCustomer" action="/Customers" method="POST">
+                <form id="insertPizzas" action="/Pizzas" method="POST">
                     
-                    <h4>New Cusotmer</h4>
+                    <h4>New Pizza</h4>
                     
-                    <label for ="cfirst_name">First Name</label>
-                    <input type="text" id="cfirst_name" name="cfirst_name" required>
+                    <label for ="pizza_type">Pizza Type</label>
+                    <input type="text" id="pizza_type" name="pizza_type" required>
                     
-                    <label for ="clast_name">Last Name</label>
-                    <input type="text" id="clast_name" name="clast_name" required>
+                    <label for ="pizza_price">Pizza Price</label>
+                    <input type="text" id="pizza_price" name="pizza_price" required>
                     
-                    <label for ="phone">Phone Number</label>
-                    <input type="text" id="phone" name="phone" required>
-                    
-                    <input type="submit" value="Add" name="Add_Customer">
+                    <input type="submit" value="Add" name="Add_Pizzas">
                 </form>
             </div>
         </body>

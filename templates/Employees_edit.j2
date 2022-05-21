@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<html>
+<!-- Adapted from the people.html UI design -->
+<head>
+	<title>Employee List</title>
+</head>
+	<h5>Updating Employees</h5> 
+		<table border="1" cellpadding="9">
+            <!-- Access data tuple passed from app.py --> 
+            {% if data %}
+			    <thead>
+				    <tr>
+					    <!-- Iterate through each key in the first entry to get the column name -->
+                        {% for key in data[0].keys() %}
+					    
+                        <!-- Create a <th> tag with the key inside of it, this will be our header row -->
+					    <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+					
+                        <!-- End of this for loop -->
+                        {% endfor %} 
+                    </tr>
+
+				<tbody>
+					<!-- Now, iterate through every item in data -->{% for item in data %}
+					    <tr>
+						    <!-- Then iterate through every key in the current item dictionary -->
+                            {% for key in item.keys() %}
+
+						    <!-- Create a <td> element with the value of that key in it -->
+						    <td> {{item[key]}} </td> 
+                            {% endfor %}
+					    </tr> 
+                        {% endfor %} 
+                {% endif %} 
+        </table>   
+	</div><!-EDIT-->
+	<div id="Employees_edit">
+		<!-- form to edit data in bsg_people-->
+		<form id="Employees_edit" action="/Employees_edit/{{data[0].employee_id}}" method="post">
+			<h5>Select SAVE to finish updating</h5>
+			<fieldset>
+
+				<input type="hidden" value="{{data[0].customer_id}}" id="employee_id" name="employee_id" required>
+
+
+				<label for="efirst_name">first name:</label>
+				<input type="text" value="{{data[0].efirst_name}}" 
+				id="efirst_name" name="efirst_name"required>
+
+
+				<label for="elast_name">last name:</label>
+				<input type="text" value="{{data[0].elast_name}}" 
+				id="elast_name" name="elast_name"required>
+
+				<label for="hourly_wage">Hourly Rate</label>
+				<input type="text" value="{{data[0].hourly_wage}}" 
+				id="hourly_wage" name="hourly_wage"required>
+	
+            </fieldset>
+			<input type="submit" value="Save" name="Employees_edit" class="btn btn-primary" style="margin:.5rem;">
+			
+			<a href='/Employees><input class="btn" type="button" value="Cancel"></a>
+        </form>
+	</div><!--edit-->
+</body>
+</html>
+{% endblock %}

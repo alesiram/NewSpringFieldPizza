@@ -1,0 +1,188 @@
+<html>
+<!-- Adapted from the people.html UI design -->
+<head>
+	<title>Orders</title>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+	<script language="JavaScript">
+	function showform(dowhat) {
+		/*
+		 * four DIVS: browse, insert, update, delete
+		 * this function sets one visible the others not
+		 */
+		if(dowhat == 'insert') {
+			document.getElementById('browse').style.display = 'none';
+			document.getElementById('insert').style.display = 'block';
+			document.getElementById('edit').style.display = 'none';
+			document.getElementById('delete').style.display = 'none';
+		} else if(dowhat == 'update') {
+			document.getElementById('browse').style.display = 'none';
+			document.getElementById('insert').style.display = 'none';
+			document.getElementById('edit').style.display = 'block';
+			document.getElementById('delete').style.display = 'none';
+		} else if(dowhat == 'delete') {
+			document.getElementById('browse').style.display = 'none';
+			document.getElementById('insert').style.display = 'none';
+			document.getElementById('edit').style.display = 'none';
+			document.getElementById('delete').style.display = 'block';
+		} else if(dowhat == 'all') {
+			document.getElementById('browse').style.display = 'block';
+			document.getElementById('insert').style.display = 'block';
+			document.getElementById('edit').style.display = 'block';
+			document.getElementById('delete').style.display = 'block';
+		} else { //by default display browse
+			document.getElementById('browse').style.display = 'block';
+			document.getElementById('insert').style.display = 'none';
+			document.getElementById('edit').style.display = 'none';
+			document.getElementById('delete').style.display = 'none';
+		}
+	}
+
+	function newOrders() {
+		showform('insert');
+	}
+
+	function updateOrders(pid) {
+		showform('update');
+	}
+
+	function deleteOrders(pid) {
+		showform('delete');
+	}
+
+	function browseOrders() {
+		showform('browse');
+	}
+
+	function showAll() {
+		showform('all');
+	}
+	</script>
+</head>
+
+<body onload="browseOrders()">
+	<h1>Orders</h1> [ Planets | <a href="Orders">Orders</a> | Certifications | People Certified ]
+	<div id="browse">
+		<p><a href="#" onClick="newOrders()">Add New Order</a> </p>
+		<table border="1" cellpadding="5">
+            <!-- Access data tuple passed from app.py --> 
+            {% if data %}
+			    <thead>
+				    <tr>
+					    <!-- Iterate through each key in the first entry to get the column name -->
+                        {% for key in data[0].keys() %}
+					    
+                        <!-- Create a <th> tag with the key inside of it, this will be our header row -->
+					    <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+					
+                        <!-- End of this for loop -->
+                        {% endfor %} 
+                    </tr>
+
+				<tbody>
+					<!-- Now, iterate through every item in data -->{% for item in data %}
+					    <tr>
+						    <!-- Then iterate through every key in the current item dictionary -->
+                            {% for key in item.keys() %}
+
+						    <!-- Create a <td> element with the value of that key in it -->
+						    <td> {{item[key]}} </td> 
+                            {% endfor %}
+
+                            <!-- Create our edit/delete buttons -->
+						    <td><a href="Orders_edit/{{item.id}}" class="btn btn-default">Edit</a></td>
+						    <td><a href="Orders_delete/{{item.id}}" class="btn btn-default">Delete</a></td>
+
+					    </tr> 
+                        {% endfor %} 
+                {% endif %} 
+        </table>   
+	<p>&nbsp;</p>
+	</div>	<!-- browse -->
+
+	<div id="insert">
+		<!-- form to INSERT new data into Orders table-->
+		<form id="insertOrders" action="/Orders" method="post">
+            <legend><strong>New Order</strong></legend>
+            <fieldset>
+                <!-- DROP DOWN FOR CUSTOMER NAME -->
+                <label> customer_id </label> 
+                <select id="cid" name="cid"> 
+                 <!-- for-loop, displayscustomer_id on drop down menu -->
+                {% for customer in Customers %}
+                <option value={{Customers['customer_id']}} selected> {{customer['customer_id']}} </option>
+                {% endfor %}
+                 </select>
+
+                 <!-- DROP DOWN FOR EMPLOYEE ID -->
+                 <label> employee_id </label> 
+                 <select id="eid" name="eid"> 
+                <!-- for-loop, displayscustomer_id on drop down menu -->
+                 {% for employee in Employess %}
+                 <option value={{Employess['employee_id']}} selected> {{employee['employee_id']}} </option>
+                 {% endfor %}
+                </select>
+
+                 <!-- DROP DOWN FOR pizza ID -->
+                 <label> pizza_id </label> 
+                 <select id="pid" name="pid"> 
+                <!-- for-loop, displayscustomer_id on drop down menu -->
+                 {% for pizza in Pizzas %}
+                 <option value={{Pizzas['pizza_id']}} selected> {{pizza['pizza_id']}} </option>
+                 {% endfor %}
+                  </select>
+
+                <div class="order_date-3">
+                    <label for="order_date" class="form-label">Date <em>(Required)</em></label>
+                    <input type="date" class="form-control" name="date" id="order_date" value="2022-2-1" required>
+                </div>
+
+                <div class="quantity-3">
+                    <label for="quantity" class="form-label">Quantity <em>(Required)</em></label>
+                    <input type="text" class="form-control" name="quantity" id="quantity" value="10" required>
+                </div>
+
+                <label> order_total </label> <input type="text" id="order_total" name="order_total" placeholder="" required>
+                <label> order_total </label> <input type="text" name="order_total" placeholder="" required>
+
+            <!-- Create 'Add Order and 'Cancel' buttons -->
+			<input type="submit" value="Add Order" name="Add_Order" class="btn btn-primary" style="margin:.5rem;">
+			
+            <input class="btn" type="button" value="Cancel" onClick="browseOrders()"> 
+        </form>
+	</div><!--insert-->
+	
+    
+    
+    
+    
+    
+    
+    <div id="edit">
+		<!-- form to edit data in bsg_people-->
+		<form id="editPerson" action="/edit_people/{{data[0].id}}" method="post">
+			<legend><strong>Edit Person</strong></legend>
+			<fieldset>
+				<input type="hidden" value="{{data[0].id}}" class="form-control" id="personID" name="personID" required>
+				<label for="make">first name:</label>
+
+				<input type="text" class="form-control" id="fname" name="fname" pattern="[A-Za-z]{1,}" placeholder="{{data[0].fname}}" required>
+				<label for="model">last name:</label>
+
+				<input type="text" class="form-control" id="lname" name="lname" pattern="[A-Za-z0-9]{1,}" placeholder="{{data[0].lname}}" required>
+				<label for="year">homeworld:</label>
+
+				<select class="form-control" id="homeworld" name="homeworld" pattern="[0-4]{1}" placeholder="" required>
+					<option value="0">&nbsp;</option>
+					<option value="1">Gemenon</option>
+					<option value="2">Leonis</option>
+					<option value="3">Caprica</option>
+					<option value="{{data[0].homeworld}}" selected></option>
+				</select>
+
+				<label for="color">age:</label>
+				<input type="text" class="form-control" id="age" name="age" pattern="[A-Za-z0-9]{1,}" placeholder="{{data[0].age}}" required> </fieldset>
+				<input class="btn" type="button" value="Cancel" onClick="browsePeople()" style="margin:.5rem;"> 
+        </form>
+	</div><!--edit-->
+</body>
+</html>

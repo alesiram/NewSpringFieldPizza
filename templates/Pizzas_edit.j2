@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<html>
+<!-- Adapted from the people.html UI design -->
+<head>
+	<title>Pizza List</title>
+</head>
+	<h5>Updating Pizzas</h5> 
+		<table border="1" cellpadding="9">
+            <!-- Access data tuple passed from app.py --> 
+            {% if data %}
+			    <thead>
+				    <tr>
+					    <!-- Iterate through each key in the first entry to get the column name -->
+                        {% for key in data[0].keys() %}
+					    
+                        <!-- Create a <th> tag with the key inside of it, this will be our header row -->
+					    <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+					
+                        <!-- End of this for loop -->
+                        {% endfor %} 
+                    </tr>
+
+				<tbody>
+					<!-- Now, iterate through every item in data -->{% for item in data %}
+					    <tr>
+						    <!-- Then iterate through every key in the current item dictionary -->
+                            {% for key in item.keys() %}
+
+						    <!-- Create a <td> element with the value of that key in it -->
+						    <td> {{item[key]}} </td> 
+                            {% endfor %}
+					    </tr> 
+                        {% endfor %} 
+                {% endif %} 
+        </table>   
+	</div><!-EDIT-->
+	<div id="Pizzas_edit">
+		<!-- form to edit data on Pizza page-->
+		<form id="Pizzas_edit" action="/Pizzas_edit/{{data[0].pizza_id}}" method="post">
+			<h5>Select SAVE to finish updating</h5>
+			<fieldset>
+
+				<input type="hidden" value="{{data[0].pizza_id}}" id="pizza_id" name="pizza_id" required>
+
+                	<!-- form to edit pizza type on Pizza page-->
+				<label for="pizza_type">Pizza Type:</label>
+				<input type="text" value="{{data[0].pizza_type}}" 
+				id="pizza_type" name="pizza_type"required>
+
+                    <!-- form to edit pizza price on Pizza page-->
+				<label for="pizza_price">Pizza Price:</label>
+				<input type="text" value="{{data[0].pizza_price}}" 
+				id="pizza_price" name="pizza_price"required>
+	
+                
+
+
+            </fieldset>
+			<input type="submit" value="Save" name="Pizzas_edit" class="btn btn-primary" style="margin:.5rem;">
+			
+			<a href='/Pizzas><input class="btn" type="button" value="Cancel"></a>
+        </form>
+	</div><!--edit-->
+</body>
+</html>
+{% endblock %}

@@ -81,9 +81,9 @@ DELETE FROM Pizzas WHERE pizza_id=:pizza_id;
 INSERT INTO Orders (customer_id, employee_id, pizza_id, order_date, order_total, quantity)
 
 VALUES 
-(:customer_id,
-:employee_id, 
-:pizza_id, 
+(:customer_id_from_dropdown,
+:employee_id_from_dropdown, 
+:pizza_id_from_dropdown, 
 :order_date, 
 :order_total, 
 :quantity);
@@ -114,7 +114,7 @@ employee_id=:employee_id,
 pizza_id=:pizza_id, 
 order_date=:order_date, 
 order_total=:order_total, 
-quantity=:quantity;
+quantity=:quantity; 
 
 
 -- DELETE 

@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<html>
+<!-- Adapted from the people.html UI design -->
+<head>
+	<title>Orders List</title>
+</head>
+	<h5>Updating Orders</h5> 
+		<table border="1" cellpadding="9">
+            <!-- Access data tuple passed from app.py --> 
+            {% if data %}
+			    <thead>
+				    <tr>
+					    <!-- Iterate through each key in the first entry to get the column name -->
+                        {% for key in data[0].keys() %}
+					    
+                        <!-- Create a <th> tag with the key inside of it, this will be our header row -->
+					    <th scope="col" data-field="{{ key }}" data-filter-control="input">{{ key }}</th>
+					
+                        <!-- End of this for loop -->
+                        {% endfor %} 
+                    </tr>
+
+				<tbody>
+					<!-- Now, iterate through every item in data -->{% for item in data %}
+					    <tr>
+						    <!-- Then iterate through every key in the current item dictionary -->
+                            {% for key in item.keys() %}
+
+						    <!-- Create a <td> element with the value of that key in it -->
+						    <td> {{item[key]}} </td> 
+                            {% endfor %}
+					    </tr> 
+                        {% endfor %} 
+                {% endif %} 
+        </table>   
+	</div><!-EDIT-->
+	<div id="Orders_edit">
+		<!-- form to edit data on Pizza page-->
+		<form id="Orders_edit" action="/Orders_edit/{{data[0].order_id}}" method="post">
+			<h5>Select SAVE to finish updating</h5>
+			<fieldset>
+
+				<input type="hidden" value="{{data[0].order_id}}" id="order_id" name="order_id" required>
+
+                	<!-- form to edit Customer ID from customer page page-->
+				<label for="customer_id">Customer ID:</label>
+				<input type="text" value="{{data[0].customer_id}}" 
+				id="customer_id" name="customer_id"required>
+
+                    <!-- form to edit employee id on employee page-->
+				<label for="employee_id">Employee ID:</label>
+				<input type="text" value="{{data[0].employee_id}}" 
+				id="employee_id" name="employee_id"required>
+                
+                  <!-- form to edit pizza_id  on pizza page-->
+				<label for="pizza_id">Pizza ID:</label>
+				<input type="text" value="{{data[0].pizza_id}}" 
+				id="pizza_id" name="pizza_id"required>
+	
+                
+                 <!-- form to edit order_date  on order page-->
+				<label for="order_date">Order Date:</label>
+				<input type="text" value="{{data[0].order_date}}" 
+				id="order_date" name="order_date"required>
+	
+
+
+                <!-- form to edit quantity  on order page-->
+				<label for="quantity">Quantity:</label>
+				<input type="text" value="{{data[0].quantity}}" 
+				id="quantity" name="quantity"required>
+
+                 <!-- form to edit order_total  on order page-->
+				<label for="order_total">Order Total:</label>
+				<input type="text" value="{{data[0].order_total}}" 
+				id="order_total" name="order_total"required>
+
+            </fieldset>
+			<input type="submit" value="Save" name="Orders_edit" class="btn btn-primary" style="margin:.5rem;">
+			
+			<a href='/Orders><input class="btn" type="button" value="Cancel"></a>
+        </form>
+	</div><!--edit-->
+</body>
+</html>
+{% endblock %}

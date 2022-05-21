@@ -25,112 +25,78 @@ mysql = MySQL(app)
 #     return render_template('index.html')
 
 # # ----------------HOME PAG-----------------------
-# @app.route('/index')
-# def index():
-#     return render_template('index.html')
+## ----------------HOME PAG-----------------------
+@app.route('/')
+def root():
+    return render_template('index.j2')
 
-
-# @app.route('/Pizzas')
-# def Pizzas():
-#     return render_template('Pizzas.html')
+@app.route('/index')
+def index():
+    return render_template('index.j2')
 
 # # ----------------PIZZA INFO-----------------------
-# @app.route('/Pizzas', methods = ['POST', 'GET'])
-# def Pizzas():
-#  # Separate out the request methods, in this case this is for a POST
-#     # insert a pizza into the pizzas entity
-#     if request.method == "POST":
-#             # fire off if user presses the Add_Pizza button
-#         if request.form.get("Add_Pizza"):
-#          # grab user form inputs
-#             pizza_type = request.form["pizza_type"]
-#             # pizza_price = request.form["pizza_price"]
-#             pizza_price = request.form["pizza_price"]
-#     # mySQL query to insert a new pizza into pizza with our form inputs
-#         else:
-#             query = "INSERT INTO Pizzas (pizza_type, pizza_price) VALUES (%s, %s)"
-#             cur = mysql.connection.cursor()
-#             cur.execute(query, (pizza_type, pizza_price))
-#             mysql.connection.commit()
+# retrieve all data 
+@app.route('/Pizzas', methods = ["POST", "GET"])
+def Pizzas():
+    if request.method == "GET":
+        # mySQL query to grab all
+        query = "SELECT * FROM Pizzas;"
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
 
-#         # redirect back to index [pizza] page
-#         return redirect("/Pizzas")
-    
-# # Grab pizzas data so we sent it to our template to display 
-#     if request.method == 'GET':
-#         # mySQL query to grab pizza id, name, type and price for our drop down menu 
-#         query = 'SELECT pizza_id, pizza_type, pizza_price FROM Pizzas'
-#         cur = mysql.connection.cursor()
-#         cur.execute(query)
-#         data = cur.fetchall()
-#         # mySQL query to grab planet id/type for drop down menu
-#         query2 = 'SELECT pizza_id, pizza_type FROM Pizzas'
-#         cur = mysql.connection.cursor()
-#         cur.execute(query2)
-#         pizza_data = cur.fetchall()
+        return render_template("Pizzas.j2", data=data)
 
-#         #render edit_pizza page passing our query data and 
-#         return render_template('Pizzas.j2', data=data, pizzas=pizza_data)
+# Create FORM 
+    if request.method =="POST":
+        if request.form.get("Add_Pizzas"):
+            pizza_type=request.form["pizza_type"]
+            pizza_price=request.form["pizza_price"]
 
-# #DELETE
-# # route for delete functionality, deleting a pizza from pizzas,
-# # we want to pass the 'id' value of that pizza on button click (see HTML) via the route
+            query = "INSERT INTO Pizzas (pizza_type, pizza_price) VALUES (%s,%s)"
+            cur = mysql.connection.cursor()
+            cur.execute(query, (pizza_type, pizza_price))
+            mysql.connection.commit()
 
-# @app.route("/Pizzas/<int:pizza_id>")
-# def delete_pizza(pizzza_id):
-#     # mySQL query to delete the person with our passed id
-#     query = "DELETE FROM Pizzas WHERE id = '%s';"
-#     cur = mysql.connection.cursor()
-#     cur.execute(query, (id,))
-#     mysql.connection.commit()
+        return redirect("/Pizzas")
 
-#     # redirect back to people page
-#     return redirect("/Pizzas.j2")
+# DELETE FORM Employees.j2
+@app.route("/Pizzas_delete/<int:pizza_id>")
+def Pizzas_delete(pizza_id):
+    # mySQL query to delete the person with our passed id
+    query = "DELETE FROM Pizzas WHERE pizza_id = '%s';"
+    cur = mysql.connection.cursor()
+    cur.execute(query, (pizza_id,))
+    mysql.connection.commit()
+
+    # redirect back to Customers.j2
+    return redirect("/Pizzas")
 
 
 
-# #EDIT 
-# # route for edit functionality, updating the attributes of a pizza in pizzas
-# # similar to our delete route, we want to the pass the 'pizza_id' value of that   pizza on button click (see HTML) via the route
-# @app.route("/edit_pizza/<int:pizza_id>", methods=["POST", "GET"])
-# def edit_pizza(pizza_id):
-#     if request.method == "GET":
-#         # mySQL query to grab the info of the person with our passed id
-#         query = "SELECT * FROM Pizzas WHERE pizza_id = %s" % (pizza_id)
-#         cur = mysql.connection.cursor()
-#         cur.execute(query)
-#         data = cur.fetchall()
+# EDIT PIZZA
+@app.route("/Pizzas_edit/<int:pizza_id>", methods=["POST", "GET"])
+def Pizzas_edit(pizza_id):
+    if request.method == "GET":
+        query = "SELECT * FROM Pizzas WHERE pizza_id = %s" % (pizza_id)
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
 
-#  # mySQL query to grab pizza id data for our dropdown
-#         query2 = 'SELECT pizza_id, pizza_type FROM Pizzas'
-#         cur = mysql.connection.cursor()
-#         cur.execute(query2)
-#         pizza_data = cur.fetchall()
+        return render_template("Pizzas_edit.j2", data=data)
 
-#         # render edit_people page passing our query data and homeworld data to the edit_people template
-#         return render_template('Pizzas.j2', data=data, pizzas=pizza_data)
+    if request.method == "POST":
+        if request.form.get("Pizzas_edit"):
+            pizza_type=request.form["pizza_type"]
+            pizza_price=request.form["pizza_price"]
+            
 
+        query = "UPDATE Pizzas SET Pizzas.pizza_type = %s, Pizzas.pizza_price = %s  WHERE Pizzas.pizza_id = %s"
+        cur = mysql.connection.cursor()
+        cur.execute(query, (pizza_type, pizza_price, pizza_id))
+        mysql.connection.commit()
 
-# # meat and potatoes of our update functionality
-#     if request.method == "POST":
-#         # fire off if user clicks the 'Edit Pizza' button
-#         if request.form.get("Edit_Pizza"):
-#             # grab user form inputs
-#             id = request.form["pizza_id"]
-#             pizza_type = request.form["pizza_type"]
-#             pizza_price = request.form["pizza_price"]
-
-
-#     # no null inputs
-#         else:
-#             query = "UPDATE Pizzas SET Pizzas.pizza_type = %s, Pizzas.pizza_price = %s WHERE Pizzas.id = %s"
-#             cur = mysql.connection.cursor()
-#             cur.execute(query, (pizza_type, pizza_price, id))
-#             mysql.connection.commit()
-
-#                 # redirect back to people page after we execute the update query
-#         return redirect("/Pizzas")
-
+        return redirect("/Pizzas")
 
 
 # ----------------Customer INFO-------------------
@@ -209,12 +175,106 @@ def Customer_edit(customer_id):
 # def Employees():
 #     return render_template('Employees.html')
 
+# retrieve all data 
+@app.route('/Employees', methods = ["POST", "GET"])
+def Employees():
+    if request.method == "GET":
+        # mySQL query to grab all
+        query = "SELECT * FROM Employees;"
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+
+        return render_template("Employees.j2", data=data)
+
+# Create FORM 
+    if request.method =="POST":
+        if request.form.get("Add_Employees"):
+            efirst_name=request.form["efirst_name"]
+            elast_name=request.form["elast_name"]
+            hourly_wage=request.form["hourly_wage"]
+
+            query = "INSERT INTO Employees (efirst_name, elast_name, hourly_wage) VALUES (%s,%s, %s)"
+            cur = mysql.connection.cursor()
+            cur.execute(query, (efirst_name, elast_name, hourly_wage))
+            mysql.connection.commit()
+
+        return redirect("/Employees")
+
+# DELETE FORM Employees.j2
+@app.route("/Employee_delete/<int:employee_id>")
+def Employee_delete(employee_id):
+    # mySQL query to delete the person with our passed id
+    query = "DELETE FROM Employees WHERE employee_id = '%s';"
+    cur = mysql.connection.cursor()
+    cur.execute(query, (employee_id,))
+    mysql.connection.commit()
+
+    # redirect back to Customers.j2
+    return redirect("/Employees")
+
+
+
+# EDIT EMPLOYEES
+@app.route("/Employees_edit/<int:employee_id>", methods=["POST", "GET"])
+def Employees_edit(employee_id):
+    if request.method == "GET":
+        query = "SELECT * FROM Employees WHERE employee_id = %s" % (employee_id)
+        cur = mysql.connection.cursor()
+        cur.execute(query)
+        data = cur.fetchall()
+
+        return render_template("Employees_edit.j2", data=data)
+
+    if request.method == "POST":
+        if request.form.get("Employees_edit"):
+            efirst_name=request.form["efirst_name"]
+            elast_name=request.form["elast_name"]
+            hourly_wage=request.form["hourly_wage"]
+
+        query = "UPDATE Employees SET Employees.efirst_name = %s, Employees.elast_name = %s, Employees.hourly_wage = %s WHERE Employees.employee_id = %s"
+        cur = mysql.connection.cursor()
+        cur.execute(query, (efirst_name, elast_name, hourly_wage, employee_id))
+        mysql.connection.commit()
+
+        return redirect("/Employees")
+
+
 
 
 # # ----------------Order INFO------------------
 # @app.route('/Orders')
 # def Orders():
 #     return render_template('Orders.html')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Listener
 if __name__ == "__main__":

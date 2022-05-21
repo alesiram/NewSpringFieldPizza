@@ -34,7 +34,8 @@ CREATE OR REPLACE TABLE Pizzas (
 );
 -- Orders table
 -- Updated employee_id to default Null from project step 3 feedback
--- CASCADE tested and woring. Deleting Customer also deletes Order with matching customer_id. 
+-- CASCADE tested and woring. 
+--Deleting Customer also deletes Order with matching customer_id. 
 CREATE OR REPLACE TABLE Orders (
 	order_id INT(10) NOT NULL AUTO_INCREMENT,
 	customer_id INT(10),
